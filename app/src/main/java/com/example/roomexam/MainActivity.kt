@@ -3,6 +3,7 @@ package com.example.roomexam
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.room.Room
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -18,18 +19,17 @@ class MainActivity : AppCompatActivity() {
             .allowMainThreadQueries() //Main Thread허용 (실제로는 background Thread 에서 작업)
             .build()
 
-        showResult(db)
+        //UI 갱신
+        db.todoDao().getAll().observe(this, Observer {
+            resultText.text = it.toString()
+        })
 
+        //버튼 클릭 시
         addButton.setOnClickListener {
             db.todoDao().insert(Todo(todoEdit.text.toString()))
-            Toast.makeText(this,"할 일 추가!", Toast.LENGTH_SHORT).show()
-            showResult(db)
+            Toast.makeText(this, "할 일 추가!", Toast.LENGTH_SHORT).show()
         }
 
-    }
-
-    private fun showResult(db:AppDatabase){
-        resultText.text = db.todoDao().getAll().toString()
     }
 
 }
