@@ -39,6 +39,10 @@ dependencies {
     //For Kotlin use kapt instead of annotationProcessor
     kapt 'androidx.room:room-compiler:2.1.0'
     implementation 'androidx.room:room-ktx:2.1.0'
-    //For LifecycleScope
+
+    //Coroutine For LifecycleScope
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0-alpha03'
+
+    // ViewModel and LiveData
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 }
