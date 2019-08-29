@@ -36,6 +36,9 @@ dependencies {
 
     //Room
     implementation 'androidx.room:room-runtime:2.1.0'
-    // For Kotlin use kapt instead of annotationProcessor
+    //For Kotlin use kapt instead of annotationProcessor
     kapt 'androidx.room:room-compiler:2.1.0'
+    implementation 'androidx.room:room-ktx:2.1.0'
+    //For LifecycleScope
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0-alpha03'
 }
