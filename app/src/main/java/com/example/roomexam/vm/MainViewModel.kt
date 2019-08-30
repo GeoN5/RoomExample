@@ -18,5 +18,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     //coroutine scope안에서 동작하도록 강제
     suspend fun insert(todo: Todo) = db.todoDao().insert(todo)
 
+    suspend fun delete(todo: Todo) = db.todoDao().delete(todo)
+
 
 }

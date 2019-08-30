@@ -14,21 +14,29 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
+    private val mainViewModel:MainViewModel by lazy {
+        ViewModelProviders.of(this)[MainViewModel::class.java]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val mainViewModel = ViewModelProviders.of(this)[MainViewModel::class.java]
 
         //UI 갱신
         mainViewModel.getAll().observe(this, Observer {
             resultText.text = it.toString()
         })
 
-        //버튼 클릭 시 DB에 insert
+        setListeners()
+
+    }
+
+    private fun setListeners(){
+
+        //insert
         addButton.setOnClickListener {
-            if (todoEdit.text.isNotEmpty()) {
+            if (todoEdit.text?.isNotEmpty()!!) {
                 //background async
                 lifecycleScope.launch(Dispatchers.IO) {
                     mainViewModel.insert(Todo(todoEdit.text.toString()))
@@ -39,6 +47,18 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        //delete
+        deleteButton.setOnClickListener {
+            if (todoEdit.text?.isNotEmpty()!!) {
+                //background async
+                lifecycleScope.launch(Dispatchers.IO) {
+                    mainViewModel.delete(Todo(todoEdit.text.toString()))
+                }
+                Toast.makeText(this, "삭제 되었습니다.!", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "삭제할 일을 입력해 주세요.", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
 }
